@@ -8,24 +8,24 @@
 </head>
 <body>
 
-    <nav>
-        <h1>wittdigital</h1>
-        <a href="#home">SYSTEM_HOME</a>
-        <a href="#apps">APP_DEVELOPMENT</a>
-        <a href="#bots">BOT_INTEGRATION</a>
-    </nav>
+<nav id="main-nav">
+    <h1>wittdigital</h1>
+    <a href="#home" class="current-active" onclick="switchTab('home')">SYSTEM_HOME</a>
+    <a href="#apps" onclick="switchTab('apps')">APP_DEVELOPMENT</a>
+    <a href="#bots" onclick="switchTab('bots')">BOT_INTEGRATION</a>
+</nav>
 
     <main>
     <section id="home" class="page-content active">
         <div class="header-status">LIVE_STREAM_ACTIVE // 2026_VERSION</div>
         <h2 id="typewriter-title"></h2>
-        <p>在這裡，我將智慧轉化為代碼...</p>
+        <p>在這裡，我將智慧轉化為代碼，如同流水尋找源頭。</p>
         
         <div class="project-grid">
-            <div class="card" onclick="showPage('apps')">
+            <div class="card" onclick="switchTab('apps')">
                 <h3>工程報價系統 v1.2.3</h3>
-                <p>點擊進入 APP 詳情...</p>
-                <span class="btn">進入專區</span>
+                <p>點擊進入專區查看詳細技術規格...</p>
+                <span class="btn">ACCESS_DATA</span>
             </div>
         </div>
     </section>
@@ -36,59 +36,61 @@
         <div class="app-screenshot">
             <img src="assets/images/app-v123.jpg" alt="App Preview" style="width:100%">
         </div>
-        <p>這裡是關於報價系統的詳細技術文件...</p>
-        <button class="btn" onclick="showPage('home')">返回主選單</button>
+        <p>這是針對工程開發者設計的報價自動化工具，支援 PDF 生成與稅務計算。</p>
+        <button class="btn" onclick="switchTab('home')">RETURN_TO_DASHBOARD</button>
     </section>
 
     <section id="bots" class="page-content">
         <div class="header-status">[PATH: /BOT_INTEGRATION]</div>
         <h2>自動化機器人</h2>
-        <p>目前開發中的 Line/Telegram Bots...</p>
+        <p>目前正在運行與優化的 Bot 列表...</p>
+        <div class="card">
+            <h3>數據聯網機器人</h3>
+            <p>STATUS: <span style="color: #48BB78;">● ONLINE</span></p>
+        </div>
     </section>
 </main>
 
-    <script>
-    // 1. 打字機效果
-    const text = "wittdigital // PRECISION_ENGINEERING";
-    let i = 0;
-    function typeWriter() {
-        if (i < text.length) {
-            document.getElementById("typewriter-title").innerHTML += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 100);
+<script>
+    // 1. 打字機效果函數
+    const fullText = "wittdigital // PRECISION_ENGINEERING";
+    let charIndex = 0;
+    
+    function runTypewriter() {
+        const titleElement = document.getElementById("typewriter-title");
+        if (charIndex < fullText.length) {
+            titleElement.innerHTML += fullText.charAt(charIndex);
+            charIndex++;
+            setTimeout(runTypewriter, 80);
         }
     }
 
-    // 2. 分頁切換功能
-    function showPage(pageId) {
-        // 隱藏所有頁面
-        const pages = document.querySelectorAll('.page-content');
-        pages.forEach(page => page.classList.remove('active'));
-
-        // 顯示指定的頁面
-        const targetPage = document.getElementById(pageId);
-        if (targetPage) {
-            targetPage.classList.add('active');
-        }
-
-        // 如果回首頁，重啟打字機（可選）
-        if (pageId === 'home') {
-            document.getElementById("typewriter-title").innerHTML = "";
-            i = 0;
-            typeWriter();
-        }
-    }
-
-    // 3. 綁定側邊欄點擊事件
-    document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault(); // 防止原本的跳轉行為
-            const targetId = this.getAttribute('href').substring(1);
-            showPage(targetId);
+    // 2. 分頁切換核心邏輯
+    function switchTab(targetId) {
+        // A. 切換內容顯隱
+        document.querySelectorAll('.page-content').forEach(section => {
+            section.classList.remove('active');
         });
-    });
+        document.getElementById(targetId).classList.add('active');
 
-    window.onload = typeWriter;
+        // B. 切換導覽列高亮狀態
+        document.querySelectorAll('nav a').forEach(link => {
+            link.classList.remove('current-active');
+            if(link.getAttribute('href') === '#' + targetId) {
+                link.classList.add('current-active');
+            }
+        });
+
+        // C. 如果回到首頁，重跑打字機
+        if (targetId === 'home') {
+            document.getElementById("typewriter-title").innerHTML = "";
+            charIndex = 0;
+            runTypewriter();
+        }
+    }
+
+    // 初始啟動
+    window.onload = runTypewriter;
 </script>
 </body>
 </html>
