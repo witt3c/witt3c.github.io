@@ -159,3 +159,34 @@ h2 {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* --- 分頁切換核心樣式 --- */
+
+/* 1. 預設隱藏所有區塊 */
+.page-content {
+    display: none; 
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease-out;
+}
+
+/* 2. 當該區塊有 .active 類別時顯示 */
+.page-content.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 3. 側邊欄目前選中項目的高亮效果 */
+nav a.current-active {
+    color: var(--bright-blue);
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--bright-blue);
+    padding-left: 15px;
+}
+
+/* 4. 進場動畫：模擬儀器螢幕掃描 */
+@keyframes screenScan {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
