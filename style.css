@@ -143,3 +143,19 @@ h2 {
     font-size: 0.7rem;
     opacity: 0.3;
 }
+
+/* 預設隱藏所有頁面 */
+.page-content {
+    display: none;
+    animation: fadeIn 0.5s ease; /* 增加切換時的淡入效果 */
+}
+
+/* 只有帶有 active 類別的頁面才顯示 */
+.page-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
